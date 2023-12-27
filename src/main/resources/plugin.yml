@@ -1,0 +1,10 @@
+name: RingsOfHell
+version: '${project.version}'
+main: me.ltommi.ringsofhell.Main
+api-version: 1.20
+commands:
+  dungeon:
+    description: dungeon
+    usage: /<command>
+permissions:
+  roh.player: false

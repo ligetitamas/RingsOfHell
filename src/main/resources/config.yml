@@ -1,0 +1,4 @@
+maxPlayers: 5
+countDownTime: 90
+gui:
+  title: "Dungeon GUI"

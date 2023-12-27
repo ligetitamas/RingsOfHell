@@ -1,0 +1,8 @@
+joinSuccess: "Sikeresen beléptél a kazamatába"
+joinFailed: "Jelenleg nem csatlakozhatsz a kazamatához"
+joinAlready: "Már beléptél a kazamatába"
+commandDeny: "Ezt a parancsot jelenleg nem használhatod"
+noPermission: "&cEhhez a parancshoz nincs jogod"
+leaveFailed: "Jelenleg nem léphetsz ki"
+leaveSuccess: "Sikeresen elhagytad a kazamatát"
+leaveAlready: "Nem tartózkodsz a kazamatában"
