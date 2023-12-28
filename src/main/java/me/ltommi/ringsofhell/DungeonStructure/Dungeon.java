@@ -1,16 +1,15 @@
 package me.ltommi.ringsofhell.DungeonStructure;
 
-import me.ltommi.ringsofhell.Main;
 import me.ltommi.ringsofhell.eventListeners.commandPreProcessEvent;
-import me.ltommi.ringsofhell.eventListeners.inventoryClickEvent;
 import me.ltommi.ringsofhell.utils.ColorTranslate;
 import me.ltommi.ringsofhell.utils.ConfigLoader;
 import org.bukkit.Bukkit;
+import org.bukkit.Location;
 import org.bukkit.configuration.ConfigurationSection;
+import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitTask;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class Dungeon {
@@ -19,8 +18,12 @@ public class Dungeon {
     private ConfigurationSection messages;
     private GUI dungeonGUI;
     private ArrayList<Player> playerList;
+    private ArrayList<Level> levels;
+    private int currentLevel=1;
     private BukkitTask task;
-    private int count;
+    private int countDownTime;
+    private Location spawnLocation;
+    private Location leaveLocation;
     public Dungeon(){
         this.state="idle";
         this.config= ConfigLoader.Load("config");
@@ -28,12 +31,22 @@ public class Dungeon {
         this.dungeonGUI= new GUI(this);
         this.playerList= new ArrayList<>();
         this.dungeonGUI=new GUI(this);
+        this.levels= new ArrayList<>();
+
         Bukkit.getServer().getPluginManager().registerEvents(new commandPreProcessEvent(this,messages), Bukkit.getPluginManager().getPlugin("RingsOfHell"));
+    }
+    private void DungeonSetup(){
+        ConfigurationSection dungeonData=ConfigLoader.Load("dungeonData");
+        for (int i=1 ; i<= dungeonData.getKeys(false).size() ; i++){
+            Level newLevel=new Level(dungeonData.getConfigurationSection("level_"+i));
+            levels.add(newLevel);
+        }
     }
     public void Join(Player player){
         if(!state.equals("running") && playerList.size()<config.getInt("maxPlayers")){
             if(!playerList.contains(player)){
                 playerList.add(player);
+                player.teleport(spawnLocation);
                 player.sendMessage(ColorTranslate.Translate(messages.getString("joinSuccess")));
                 if (state.equals("idle")){
                     CountDown();
@@ -51,6 +64,7 @@ public class Dungeon {
         if (playerList.contains(player)){
             if (!state.equals("running")){
                 playerList.remove(player);
+                player.teleport(leaveLocation);
                 player.sendMessage(ColorTranslate.Translate(messages.getString("leaveSuccess")));
                 if (playerList.size()==0){
                     task.cancel();
@@ -69,29 +83,30 @@ public class Dungeon {
     }
     private void CountDown(){
         state="countdown";
-            count = config.getInt("countDownTime");
+            countDownTime = config.getInt("countDownTime");
             task = Bukkit.getScheduler().runTaskTimer(Bukkit.getPluginManager().getPlugin("RingsOfHell"), ()-> {
-                if (count>5 && count%10==0){
+                if (countDownTime >5 && countDownTime %10==0){
                     for (Player player : playerList) {
-                        player.sendMessage(count + "");
+                        player.sendMessage(countDownTime + "");
                     }
                 }
-                else if(count<6 && count>0){
+                else if(countDownTime <6 && countDownTime >0){
                     for (Player player : playerList) {
-                        player.sendMessage(count + "");
+                        player.sendMessage(countDownTime + "");
                     }
                 }
-                if(count == 0){
+                if(countDownTime == 0){
                     for (Player player : playerList) {
                         player.sendMessage("start");
                     }
                     task.cancel();
                 }
-                count--;
+                countDownTime--;
         }, 20, 20);
     }
     private void Start(){
-
+        state= "running";
+        levels.get(currentLevel).Run();
     }
 
 

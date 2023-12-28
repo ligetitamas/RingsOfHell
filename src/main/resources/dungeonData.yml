@@ -1,0 +1,46 @@
+level_1:
+  wave_1:
+    - mobName: "példa"
+      world: "world"
+      x: 1
+      y: 1
+      z: 1
+    - mobName: "példa"
+      world: "world"
+      x: 1
+      y: 1
+      z: 1
+  wave_2:
+    - mobName: "példa"
+      world: "world"
+      x: 1
+      y: 1
+      z: 1
+    - mobName: "példa"
+      world: "world"
+      x: 1
+      y: 1
+      z: 1
+level_2:
+  wave_1:
+    - mobName: "példa"
+      world: "world"
+      x: 1
+      y: 1
+      z: 1
+    - mobName: "példa"
+      world: "world"
+      x: 1
+      y: 1
+      z: 1
+  wave_2:
+    - mobName: "példa"
+      world: "world"
+      x: 1
+      y: 1
+      z: 1
+    - mobName: "példa"
+      world: "world"
+      x: 1
+      y: 1
+      z: 1
