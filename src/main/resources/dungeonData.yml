@@ -1,4 +1,10 @@
 level_1:
+  boss:
+    mobName: "példa"
+      world: "world"
+      x: 1
+      y: 1
+      z: 1
   wave_1:
     - mobName: "példa"
       world: "world"
@@ -22,6 +28,12 @@ level_1:
       y: 1
       z: 1
 level_2:
+  boss:
+    mobName: "példa"
+      world: "world"
+      x: 1
+      y: 1
+      z: 1
   wave_1:
     - mobName: "példa"
       world: "world"
