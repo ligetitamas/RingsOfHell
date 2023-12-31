@@ -12,7 +12,7 @@ public class Level {
     private ArrayList<Wave> waves;
     public Level(ConfigurationSection levelSection){
         waves = new ArrayList<>();
-
+        SetupWaves(levelSection);
     }
     private void SetupWaves(ConfigurationSection levelSection){
         int waveCount=0;
