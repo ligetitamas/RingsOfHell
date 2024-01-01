@@ -7,4 +7,11 @@ commands:
     description: dungeon
     usage: /<command>
 permissions:
-  roh.player: false
+  roh.player:
+    description: permission to use player commands
+    default: false
+  roh.admin:
+    description: permission to use admin commands
+    default: false
+    children:
+      roh.player: true
