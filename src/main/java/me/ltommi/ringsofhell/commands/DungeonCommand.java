@@ -12,10 +12,12 @@ import org.bukkit.entity.Player;
 public class DungeonCommand implements CommandExecutor {
     private ConfigurationSection config;
     private ConfigurationSection messages;
+    private ConfigurationSection dungeonData;
     private Dungeon dungeon;
     public DungeonCommand(Dungeon dungeon){
         this.config= ConfigLoader.Load("config");
         this.messages= ConfigLoader.Load("messages");
+        this.dungeonData= ConfigLoader.Load("dungeonData");
         this.dungeon=dungeon;
     }
     @Override
