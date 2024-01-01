@@ -22,25 +22,22 @@ public class DungeonCommand implements CommandExecutor {
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if(sender instanceof Player){
             Player player = (Player) sender;
-            if (args.length==0){
-                //   /dungeon
-                if (player.hasPermission("roh.player")){
+            if (player.hasPermission("roh.player")){
+                if (args.length==0){
+                    //   /dungeon
                     dungeon.GUI().Open(player);
                 }
-                else{
-                    player.sendMessage(ColorTranslate.Translate(messages.getString("noPermission")));
-                }
-            }
-            else if(args.length==1 && args[0].equals("leave")){
-                if(player.hasPermission("roh.player")){
+                else if(args.length==1 && args[0].equals("leave")){
                     dungeon.Leave(player);
                 }
-                else{
-                    player.sendMessage(ColorTranslate.Translate(messages.getString("noPermission")));
-                }
             }
+            else if (player.hasPermission("roh.admin"))
+            {
 
-
+            }
+            else{
+                player.sendMessage(ColorTranslate.Translate(messages.getString("noPermission")));
+            }
         }
         return true;
     }
