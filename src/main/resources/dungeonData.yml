@@ -1,4 +1,9 @@
 level_1:
+  spawnLocation:
+    world: "world"
+      x: 1
+      y: 1
+      z: 1
   boss:
     mobName: "példa"
       world: "world"
@@ -28,6 +33,11 @@ level_1:
       y: 1
       z: 1
 level_2:
+  spawnLocation:
+    world: "world"
+      x: 1
+      y: 1
+      z: 1
   boss:
     mobName: "példa"
       world: "world"

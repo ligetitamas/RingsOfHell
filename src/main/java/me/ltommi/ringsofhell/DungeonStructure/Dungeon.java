@@ -38,7 +38,7 @@ public class Dungeon {
     private void DungeonSetup(){
         ConfigurationSection dungeonData=ConfigLoader.Load("dungeonData");
         for (int i=1 ; i<= dungeonData.getKeys(false).size() ; i++){
-            Level newLevel=new Level(dungeonData.getConfigurationSection("level_"+i));
+            Level newLevel=new Level(dungeonData.getConfigurationSection("level_"+i),playerList);
             levels.add(newLevel);
         }
     }
