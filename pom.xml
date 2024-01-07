@@ -54,6 +54,10 @@
 
     <repositories>
         <repository>
+            <id>jitpack.io</id>
+            <url>https://jitpack.io</url>
+        </repository>
+        <repository>
             <id>nexus</id>
             <name>Lumine Releases</name>
             <url>https://mvn.lumine.io/repository/maven-public/</url>
@@ -74,6 +78,11 @@
     </repositories>
 
     <dependencies>
+        <dependency>
+            <groupId>com.github.Obliviated</groupId>
+            <artifactId>BlokSQLiteAPI</artifactId>
+            <version>1.0.7-b</version>
+        </dependency>
         <dependency>
             <groupId>io.lumine</groupId>
             <artifactId>Mythic-Dist</artifactId>

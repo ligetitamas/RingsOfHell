@@ -6,10 +6,10 @@ level_1:
       z: 1
   boss:
     mobName: "példa"
-      world: "world"
-      x: 1
-      y: 1
-      z: 1
+    world: "world"
+    x: 1
+    y: 1
+    z: 1
   wave_1:
     - mobName: "példa"
       world: "world"

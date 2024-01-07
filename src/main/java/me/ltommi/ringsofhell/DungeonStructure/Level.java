@@ -1,10 +1,10 @@
 package me.ltommi.ringsofhell.DungeonStructure;
 
+import me.ltommi.ringsofhell.eventListeners.entityDeathEvent;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
-import org.bukkit.event.player.PlayerBucketFillEvent;
 import org.bukkit.scheduler.BukkitTask;
 
 import java.util.ArrayList;
@@ -13,6 +13,8 @@ import java.util.Map;
 import java.util.Set;
 
 public class Level {
+    private Dungeon dungeon;
+    private Enemy boss;
     private ArrayList<Wave> waves;
     private ArrayList<Player> playerList;
     private Location spawnLocation;
@@ -20,7 +22,8 @@ public class Level {
     private int timeBetweenWaves;
     private BukkitTask task;
 
-    public Level(ConfigurationSection levelSection, ArrayList<Player> playerList){
+    public Level(Dungeon dungeon, ConfigurationSection levelSection, ArrayList<Player> playerList){
+        this.dungeon=dungeon;
         this.waves = new ArrayList<>();
         this.playerList=playerList;
         this.spawnLocation=new Location(Bukkit.getWorld(levelSection.getString("spawnLocation.world")),levelSection.getInt("spawnLocation.x"),levelSection.getInt("spawnLocation.y"),levelSection.getInt("spawnLocation.z"));
@@ -43,6 +46,8 @@ public class Level {
                 waves.add(newWave);
             }
         }
+        ConfigurationSection bossSection = levelSection.getConfigurationSection("boss");
+        boss=new Enemy(bossSection.getString("mobName"), bossSection.getInt("x"),bossSection.getInt("y"),bossSection.getInt("z"), bossSection.getString("world"));
     }
     public void Run(){
         TeleportPlayers();
@@ -66,8 +71,8 @@ public class Level {
                 for (Player player : playerList) {
                     player.sendMessage("start");
                 }
+                waves.get(currentWave).SpawnWave();
                 if (currentWave<waves.size()){
-                    waves.get(currentWave).SpawnWave();
                     ScheduleWave();
                 }
                 else{
@@ -79,6 +84,6 @@ public class Level {
         }, 20, 20);
     }
     private void ScheduleBoss(){
-
+        Bukkit.getServer().getPluginManager().registerEvents(new entityDeathEvent(dungeon, boss.Spawn().getEntity().getBukkitEntity()), Bukkit.getPluginManager().getPlugin("RingsOfHell"));
     }
 }

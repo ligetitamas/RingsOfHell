@@ -19,7 +19,7 @@ public class Dungeon {
     private GUI dungeonGUI;
     private ArrayList<Player> playerList;
     private ArrayList<Level> levels;
-    private int currentLevel=1;
+    private int currentLevel;
     private BukkitTask task;
     private int countDownTime;
     private Location spawnLocation;
@@ -32,13 +32,14 @@ public class Dungeon {
         this.playerList= new ArrayList<>();
         this.dungeonGUI=new GUI(this);
         this.levels= new ArrayList<>();
+        this.currentLevel=1;
 
         Bukkit.getServer().getPluginManager().registerEvents(new commandPreProcessEvent(this,messages), Bukkit.getPluginManager().getPlugin("RingsOfHell"));
     }
     private void DungeonSetup(){
         ConfigurationSection dungeonData=ConfigLoader.Load("dungeonData");
         for (int i=1 ; i<= dungeonData.getKeys(false).size() ; i++){
-            Level newLevel=new Level(dungeonData.getConfigurationSection("level_"+i),playerList);
+            Level newLevel=new Level(this,dungeonData.getConfigurationSection("level_"+i),playerList);
             levels.add(newLevel);
         }
     }
@@ -98,6 +99,7 @@ public class Dungeon {
                 if(countDownTime == 0){
                     for (Player player : playerList) {
                         player.sendMessage("start");
+                        Start();
                     }
                     task.cancel();
                 }
@@ -108,9 +110,16 @@ public class Dungeon {
         state= "running";
         levels.get(currentLevel).Run();
     }
+    public void NextLevel(){
+        currentLevel++;
+        if (currentLevel<=levels.size()){
+            levels.get(currentLevel).Run();
+        }
+        else{
+            //kivitte a dungeont?
+        }
 
-
-
+    }
     public GUI GUI(){
         return dungeonGUI;
     }
